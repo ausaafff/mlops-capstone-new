@@ -8,10 +8,12 @@ import numpy as np
 model = joblib.load("model.pkl")
 
 
-# Define request schema
+# Request schema
 class InputData(BaseModel):
-    area: float  # your column from CSV
+    area: float
 
+
+# FastAPI app
 app = FastAPI()
 
 
