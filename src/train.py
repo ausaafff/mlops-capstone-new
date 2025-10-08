@@ -5,7 +5,6 @@ import joblib
 import mlflow
 import mlflow.sklearn
 
-# TODO: Add MLflow tracking params, metrics, and model logging
 
 def main():
     df = pd.read_csv("data/housing.csv")
@@ -14,16 +13,36 @@ def main():
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    model = LinearRegression()
-    model.fit(X_train, y_train)
+    # Training parameters
+    test_size = 0.2
+    random_state = 42
 
-    score = model.score(X_test, y_test)
-    print("Model R^2 Score:", score)
+    # Start MLflow run
+    with mlflow.start_run():
+        # Log parameters
+        mlflow.log_param("test_size", test_size)
+        mlflow.log_param("random_state", random_state)
 
-    # Save model locally
-    joblib.dump(model, "model.pkl")
+        # Train model
+        model = LinearRegression()
+        model.fit(X_train, y_train)
 
-    # TODO: Log params, metrics, and model with MLflow
+        # Evaluate
+        score = model.score(X_test, y_test)
+        print("Model R^2 Score:", score)
+
+        # Log metrics
+        mlflow.log_metric("r2_score", score)
+
+        # Save & log model artifact
+        joblib.dump(model, "model.pkl")
+        mlflow.sklearn.log_model(model, "linear_model")
+
+        # Log the saved model.pkl as a generic artifact
+        mlflow.log_artifact("model.pkl")
+        
 
 if __name__ == "__main__":
+
+
     main()
