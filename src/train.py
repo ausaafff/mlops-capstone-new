@@ -5,7 +5,6 @@ import joblib
 import mlflow
 import mlflow.sklearn
 
-
 def main():
     df = pd.read_csv("data/housing.csv")
     X = df[["area"]]
@@ -42,7 +41,5 @@ def main():
         mlflow.sklearn.log_model(model, "linear_model")
         mlflow.log_artifact("model.pkl")
 
-
 if __name__ == "__main__":
     main()
-    
