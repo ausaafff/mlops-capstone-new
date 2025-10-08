@@ -26,6 +26,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install flake8
+          
+      - name: Auto-fix PEP8 issues
+        run: |
+        pip install autopep8
+        autopep8 --in-place --aggressive --aggressive ./app.py
+        autopep8 --in-place --aggressive --aggressive ./src/train.py 
 
       # 4. Lint code
       - name: Lint code
