@@ -11,7 +11,10 @@ def main():
     X = df[["area"]]
     y = df["price"]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    # Split dataset
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
 
     # Training parameters
     test_size = 0.2
@@ -37,12 +40,8 @@ def main():
         # Save & log model artifact
         joblib.dump(model, "model.pkl")
         mlflow.sklearn.log_model(model, "linear_model")
-
-        # Log the saved model.pkl as a generic artifact
         mlflow.log_artifact("model.pkl")
-        
+
 
 if __name__ == "__main__":
-
-
     main()
