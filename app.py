@@ -22,3 +22,4 @@ def predict(data: InputData):
     X = np.array([[data.area]])
     prediction = model.predict(X)[0]
     return {"prediction": float(prediction)}
+    
